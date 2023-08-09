@@ -12,8 +12,7 @@
  */
 
 // Your code goes here...
-
-
+const allItems = Array.from(document.querySelectorAll('.item'));
 
 /**
  * @task
@@ -23,8 +22,7 @@
  */
 
 // Your code goes here...
-
-
+const sortBtn=document.querySelectorAll('.sortBtn');
 
 /**
  * @task
@@ -38,9 +36,18 @@
  */
 
 // Your code goes here...
+function sortData(direction){
+    const main = document.getElementById('main');
+    allItems.sort((a, b) => {
+        const idA = parseInt(a.id);
+        const idB = parseInt(b.id);
+        return direction==='asc'?idA - idB:idB - idA;
+    });
+    main.innerHTML = '';
+    allItems.forEach(div => main.appendChild(div));
+}
 
-
-
+//sortData('desc');
 /**
  * @task
  * Iterate through the every item in sortBtn NodeList and apply the
@@ -50,5 +57,9 @@
  */
 
 // Your code goes here...
-
+for(const btn of sortBtn){
+    btn.addEventListener('click',(e)=>{
+        sortData(e.target.dataset.sortdir);
+    })
+}
 

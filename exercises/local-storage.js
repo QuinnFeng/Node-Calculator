@@ -38,3 +38,47 @@
  */
 
 // Your code goes here...
+
+const favorites=JSON.parse(localStorage.getItem('favorites'));
+
+function redBackground(id){
+    const div = document.getElementById(id);
+    div.classList.add('red');
+}
+
+function addToFavorites(id){
+    favorites.push(id);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+function removeFromFavorites(id){
+    favorites.splice(favorites.indexOf(id),1);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+const callbackFn =(e) =>{
+    const item =e.target;
+    const id=item.id;
+    if(item.classList.contains('card')){
+        if(favorites.includes(id)){
+            item.classList.remove('red');
+            removeFromFavorites(id);
+        }
+        else{
+            redBackground(id);
+            addToFavorites(id);
+        }
+    }
+};
+
+const cardsContainer = document.querySelector('.cardsContainer');
+cardsContainer.addEventListener('click',callbackFn);
+
+window.addEventListener('load', function() {
+    if(localStorage.getItem('favorites')===null){
+        localStorage.setItem('favorites',JSON.stringify([]));
+    }
+    else{
+        favorites.forEach(id => redBackground(id));
+    }
+});

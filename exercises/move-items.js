@@ -12,7 +12,7 @@
  */
 
 // Your code goes here...
-
+const allItems = document.querySelectorAll('.item');
 
 
 /**
@@ -23,7 +23,7 @@
  * */
 
 // Your code goes here
-
+const main = document.querySelector('#main');
 
 
 /**
@@ -34,7 +34,7 @@
  */
 
 // Your code goes here
-
+const favs = document.querySelector('#favs');
 
 
 /**
@@ -43,11 +43,22 @@
  * Takes an argument of the item id (number)
  * Take an argument of direction as a string value of 'toMain' or 'toFavs'
  * Moves the element from the current parent to the new parent (from main to favs or vice versa)
- * Changes the icon of the element: fa-heart-circle-plus for main, fa-heart-crack for favs items.
+ * Changes the icon of the element: fa-heart-circle-plus for main,  for favs items.
  */
 
 // Your code goes here
-
+function updateCollections(id,direction){
+    const isToFavs = direction==='toFavs';
+    const currentDiv = isToFavs?main:favs;
+    const nextDiv = isToFavs?favs:main;
+    // const divWithId = currentDiv.querySelector(`#${id}`);
+    const divWithId = document.getElementById(id);
+    const iElement = divWithId.querySelector('i');
+    const currentAttr = isToFavs?'fa-heart-circle-plus':'fa-heart-crack';
+    const nextAttr = isToFavs?'fa-heart-crack':'fa-heart-circle-plus';
+    iElement.className = iElement.className.replace(currentAttr, nextAttr);
+    nextDiv.appendChild(divWithId);
+}
 
 
 /**
@@ -65,5 +76,11 @@
  */
 
 // Your code goes here...
-
+for(const elm of allItems){
+    elm.addEventListener('click',function(){
+        const itemId = this.id;
+        const direction = this.parentNode.id==='main'?'toFavs':'toMain';
+        updateCollections(itemId,direction);
+    })
+}
 
